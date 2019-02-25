@@ -1,0 +1,46 @@
+import { resolve } from 'dns';
+
+const yargs = require('yargs');
+const geocode = require('./geocode/geocodeAddress');
+const wetherfc = require('./weatherforecast/weatherforecast');
+
+// yargs.commmand('a','Find the Address Lon and Lat ',{
+
+// })
+var args = yargs
+.options({
+    address:{
+    alias:'a',
+    describe : 'Address Fetching...',
+    demand:true,
+    string:true
+    }
+})
+.help()
+.alias('help','h')
+.argv;
+
+
+geocode.geocode(args.address).then,(error,results)=>{
+    if(error){
+        console.log(error);
+    }
+    else{
+        // console.log(JSON.stringify(results,undefined,2) );
+
+        console.log( `Address  : ${address}`)
+        wetherfc.weatherforecast(latitude,longitude).then(()=>{})
+
+
+
+        return new Promise ((resolve,reject)=>{
+            if(error){
+                reject(error);
+            }
+            else{
+                    resolve(`Sumarry of Weather in your area : ${Weather}`);
+                    resolve(`Temperature in your area : ${temperature}`);
+            }
+        });
+    }
+});
